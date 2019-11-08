@@ -4,6 +4,8 @@
 
 This documentation will help identify the trade-offs of the different React patterns and when each pattern would be most appropriate. The following patterns will allow for more useful and reusable code by adhering to design principles like **separation of concern**, **DRY**, and **code reuse**. Some of these patterns will help with problems that arise in large React applications such as **prop drilling.** Each major pattern includes an example hosted on [CodeSandBox](https://codesandbox.io/).
 
+<a name="tableofcontents"></a>
+
 ### 📚 Table of Contents
 - [Compound Components](#compoundComponents)
 - [Compound Components CodeSandBox](#compoundComponentsCodeSandBox)
@@ -24,18 +26,26 @@ This documentation will help identify the trade-offs of the different React patt
 - [React Hooks CodeSandBox](#reactHooksCodeSandBox)
 - [Forward Refs](#forwardRefs)
 
-## [⬆️](#compoundComponents) Compound Components
+<a name="compoundComponents"></a>
+
+## [⬆️](#tableofcontents) Compound Components
 
 - Compound components is a pattern where components are used together such that they share an implicit state that lets them communicate with each other in the background.
 - Think of compound components like the `<select>` and `<option>` elements in HTML. Apart they don't do too much, but together they allow you to create the complete experience.
 
-### [⬆️](#compoundComponentsCodeSandBox) [Compound Components CodeSandBox](https://codesandbox.io/s/844n4m7qxj)
+<a name="compoundComponentsCodeSandBox"></a>
 
-## [⬆️](#flexibleCompoundComponents) Flexible Compound Components
+### [⬆️](#tableofcontents) [Compound Components CodeSandBox](https://codesandbox.io/s/844n4m7qxj)
+
+<a name="flexibleCompoundComponents"></a>
+
+## [⬆️](#tableofcontents) Flexible Compound Components
 
 - The problem with compound components is that it can only clone and pass props to  **immediate**  **children.** To allow for compound components to  implicitly accept props regardless of where they're rendered within the parent component we can use React's **Context API**.
 
-###  [⬆️](#contextAPI) Context API (v16.3)
+<a name="contextAPI"></a>
+
+###  [⬆️](#tableofcontents) Context API (v16.3)
 
 #### React.createContext
 
@@ -77,9 +87,13 @@ const MyContext = React.createContext(defaultValue);
 - **Provider component**  wraps around the **consumer components** (child components)  to manage the shared state.
 - **Consumer component**  is used within the  **provider component** to access or update shared state.
 
-### [⬆️](#flexibleCompoundComponentCodeSandBox) [Flexible Compound Component w/ Context API CodeSandBox](https://codesandbox.io/s/5jwm1pop)
+<a name="flexibleCompoundComponentCodeSandBox"></a>
 
-## [⬆️](#renderProps) Render Props
+### [⬆️](#tableofcontents) [Flexible Compound Component w/ Context API CodeSandBox](https://codesandbox.io/s/5jwm1pop)
+
+<a name="renderProps"></a>
+
+## [⬆️](#tableofcontents) Render Props
 
 - **Usage Case:**  Fetching data and showing data are two separate concerns. Ideally, a single component has a  [single responsibility](https://blog.bitsrc.io/solid-principles-every-developer-should-know-b3bfa96bb688).
     - **1st component**  is a ****functional** component**. Its primary concern is rendering the view (how it's going to look).  
@@ -87,40 +101,56 @@ const MyContext = React.createContext(defaultValue);
 - The Render Prop API gives the user control over what they are rendering. The render responsibility is under the ownership of the user and not the component implementation.
 - This pattern differs from the Compound Component pattern by making the state explicit allowing the user to render custom components.
 
-### [⬆️](#renderPropsCodeSandBox) [Render Props CodeSandBox](https://codesandbox.io/s/vyz5jlxkvl)
+<a name="renderPropsCodeSandBox"></a>
+
+### [⬆️](#tableofcontents) [Render Props CodeSandBox](https://codesandbox.io/s/vyz5jlxkvl)
 
 ---
 
-#### [⬆️](#propCollections) Prop Collections
+<a name="propCollections"></a>
+
+#### [⬆️](#tableofcontents) Prop Collections
 
 - Often when using the render prop, some elements commonly require the same props applied for accessibility or interactivity purposes to certain elements.
 - With prop collection, you can collect these props into an object for users to simply apply to their elements
 - When a user's component has common props such as `onClick` and `aria-expanded` on a button we can add a collection of props that can easily be used for the end user.
 - The user can spread the object (defined in the parent component) on an element where the object's properties are attributes or event handlers.
 
-#### [⬆️](#propCollectionsCodeSandBox) [Prop Collections CodeSandBox](https://codesandbox.io/s/zxypkwx9px)
+<a name="propCollectionsCodeSandBox"></a>
+
+#### [⬆️](#tableofcontents) [Prop Collections CodeSandBox](https://codesandbox.io/s/zxypkwx9px)
 
 ---
 
-#### [⬆️](#propGetters) Prop Getters
+<a name="propGetters"></a>
+
+#### [⬆️](#tableofcontents) Prop Getters
 
 - Instead of spreading an object, we call a function that returns an object. That function accepts all the props (attributes and event handlers) that we want to be applied to the element. Then the function's job is to compose all the props together so that it spreads the desired props that should be applied to the element.
 - **Why use a function to get props? Why not use an object and allow the user to spread it on the element?**
     - In our example below the prop getter function, **_getTogglerProps_**, composes all of the props passed in from the user of the component and the component's default prop collection. This allows for the user's custom  
         **_onButtonClick_**  and the component's default **_toggle_** to both be called. If we were to spread the prop collection like in the previous example like so: _**<button onClick={this.onButtonClick} {...togglerProps} />**._ The  **_onClick_**  function in _togglerProps_ will override the user's custom _**onButtonClick**._
 
-#### [⬆️](#propGettersCodeSandBox) [Prop Getters CodeSandBox](https://codesandbox.io/s/qqz1j9xox4)
+<a name="propGettersCodeSandBox"></a>
 
-## [⬆️](#providerPattern) Provider Pattern
+#### [⬆️](#tableofcontents) [Prop Getters CodeSandBox](https://codesandbox.io/s/qqz1j9xox4)
+
+<a name="providerPattern"></a>
+
+## [⬆️](#tableofcontents) Provider Pattern
 
 - Provider pattern solves the problem of **prop drilling**.
 - Provider pattern uses compound components and it exposes a Context.Consumer for the user component.
 - Provider pattern  **allows to share state anywhere in the tree**  as well as utilize the  **render props pattern**.
 - Usually only expose the Consumer and keep the provider in the root component that's handling the state management.
 
-### [⬆️](#providerPatternCodeSandBox) [Provider Pattern Example](https://codesandbox.io/s/k51x2m2n5o)
+<a name="providerPatternCodeSandBox"></a>
 
-## [⬆️](#HOC) Higher Order Components (HOC)
+### [⬆️](#tableofcontents) [Provider Pattern Example](https://codesandbox.io/s/k51x2m2n5o)
+
+<a name="HOC"></a>
+
+## [⬆️](#tableofcontents) Higher Order Components (HOC)
 
 - A higher-order component (HOC) is an advanced technique in React for reusing component logic. A useful mechanism for sharing code.
 - HOC is another way to share code and allows you to create new components to render statically.
@@ -128,9 +158,13 @@ const MyContext = React.createContext(defaultValue);
 - HOC can provide a nicer API for the code you're trying to share.
 - Usually, if you build HOC, under the hood, you want to implement/ utilize render prop.
 
-### [⬆️](#HOCCodeSandBox) [Higher Order Components CodeSandBox](https://codesandbox.io/s/myjr3rxrjj)
+<a name="HOCCodeSandBox"></a>
 
-## [⬆️](#reactHooks) React Hooks (v16.8)
+### [⬆️](#tableofcontents) [Higher Order Components CodeSandBox](https://codesandbox.io/s/myjr3rxrjj)
+
+<a name="reactHooks"></a>
+
+## [⬆️](#tableofcontents) React Hooks (v16.8)
 
 - In version 16.8 React introduced Hooks, allowing to handle internal state without using a class component! With hooks, we can write functional components that can handle its state. As well it introduces the ability to create side effects (data fetching, subscriptions, or manually changing the DOM) in your functional components.
 - **Hooks let you use more of React’s features without classes.**
@@ -184,9 +218,13 @@ function FriendStatus(props) {
 - React provides an [eslint-plugin](https://www.npmjs.com/package/eslint-plugin-react-hooks) for React Hooks.
 - Next time you discuss React class component vs functional component, please do not refer to functional components as stateless components 😄.
 
-### [⬆️](#reactHooksCodeSandBox) [Hooks CodeSandBox](https://codesandbox.io/s/14wy8nrzlq)
+<a name="reactHooksCodeSandBox"></a>
 
-## [⬆️](#forwardRefs) Forward Refs
+### [⬆️](#tableofcontents) [Hooks CodeSandBox](https://codesandbox.io/s/14wy8nrzlq)
+
+<a name="forwardRefs"></a>
+
+## [⬆️](#tableofcontents) Forward Refs
 
 - **Ref forwarding**  is an opt-in feature that lets some components take a ref they receive, and pass it further down (in other words, “forward” it) to a child.
 - Ref forwarding is a technique for automatically passing a  **ref**  through a component to one of its children. This is typically not necessary for most components in the application. However, it can be useful for some kinds of components, especially for reusable components.
