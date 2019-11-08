@@ -11,4 +11,4 @@ A React guide featuring documentation on component patterns, style guide and acc
 
 ### Happy Coding :)
 
-<a href="https://www.buymeacoffee.com/dyMHPEW" target="_blank"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png)](https://www.buymeacoffee.com/dyMHPEW)
