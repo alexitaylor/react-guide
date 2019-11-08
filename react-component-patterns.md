@@ -27,7 +27,7 @@ This documentation will help identify the trade-offs of the different React patt
 ## [⬆️](#compoundComponents) Compound Components
 
 - Compound components is a pattern where components are used together such that they share an implicit state that lets them communicate with each other in the background.
-- Think of compound components like the <select> and <option> elements in HTML. Apart they don't do too much, but together they allow you to create the complete experience.
+- Think of compound components like the `<select>` and `<option>` elements in HTML. Apart they don't do too much, but together they allow you to create the complete experience.
 
 ### [⬆️](#compoundComponentsCodeSandBox) [Compound Components CodeSandBox](https://codesandbox.io/s/844n4m7qxj)
 
