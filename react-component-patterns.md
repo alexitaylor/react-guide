@@ -192,22 +192,28 @@ function Counter() {
 - Optionally, if your effect returns a function, React will run it after the component un-mounts performing a cleanup of the component. For example, if we set up a subscription in the effect we would want to clean it up to prevent any memory leaks. So we would unsubscribe from the subscription in the returned function.
 
 ```jsx
-import React, { useState, useEffect } from 'react';  
-   
-function FriendStatus(props) {  
-  const [isOnline, setIsOnline] = useState(null);  
-   
-  useEffect(() => {  
-    function handleStatusChange(status) {  
-      setIsOnline(status.isOnline);  
-    }  
-   
- ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange); // Specify how to clean up after this effect: return () => { ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange); };  }, [props.friend.id]); // Only re-subscribe if props.friend.id changes  
-   
-  if (isOnline === null) {  
-    return 'Loading...';  
-  }  
-  return isOnline ? 'Online' : 'Offline';  
+
+import React, { useState, useEffect } from 'react';
+ 
+function FriendStatus(props) {
+  const [isOnline, setIsOnline] = useState(null);
+ 
+  useEffect(() => {
+    function handleStatusChange(status) {
+      setIsOnline(status.isOnline);
+    }
+ 
+    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
+    // Specify how to clean up after this effect:
+    return () => {
+      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
+    };
+  }, [props.friend.id]); // Only re-subscribe if props.friend.id changes
+ 
+  if (isOnline === null) {
+    return 'Loading...';
+  }
+  return isOnline ? 'Online' : 'Offline';
 }
 ```
 
